@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,10 @@ public class koka : MonoBehaviour
     public float Speed = 20f;
     public int a;
     public int b;
-    public int c = 10;
+    public int c = 3;
     public GameObject sphere;
+    public GameObject hol1; 
+    public GameObject hol2;
     public Text x;
     // Start is called before the first frame update
     void Start()
@@ -36,36 +39,31 @@ public class koka : MonoBehaviour
         {
             transform.Rotate(Vector3.up * 10 * Speed * Time.deltaTime);
         }
-        if (c <= 0)
+        if (c == 0)
         {
-            this.gameObject.SetActive(false);
-            x.text = "Игра окончена";
+            x.text = "Ты уничтожил их!";
         }
-        else x.text = c.ToString();
     }
     private void OnCollisionEnter(Collision collision)
     {
         this.gameObject.GetComponent<Renderer>().material.color = Color.red;
-        c--;
     }
     private void OnCollisionExit(Collision collision)
     {
-        this.gameObject.GetComponent<Renderer>().material.color = Color.white;
+        this.gameObject.GetComponent<Renderer>().material.color = Color.blue;
     }
     private void OnCollisionStay(Collision collision)
     {
         this.gameObject.GetComponent<Renderer>().material.color = Color.white;
     }
-    private void OnTriggerEnter(Collider other)
+    public void del()
     {
-        
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        
-    }
-    public void heal()
-    {
-        c += 5;
+        if (sphere.activeSelf)
+            sphere.SetActive(false);
+        else if(hol1.activeSelf)
+            hol1.SetActive(false);
+        else if (hol2.activeSelf)
+            hol2.SetActive(false);
+        c--;
     }
 }
